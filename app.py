@@ -1,7 +1,7 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 from services.calendar_service import get_calendar_events
-from services.ai_service import generate_tasks
+from services.ai_service import generate_tasks_stream
 from services.todo_service import generate_todo_with_calendar
 
 app = Flask(__name__)
@@ -13,19 +13,18 @@ CORS(app)
 def index():
     return render_template('index.html')
 
-# AI-generated task and calendar integration
-@app.route('/api/generate_todo', methods=['POST'])
-def generate_todo():
+# AI-generated task and calendar integration with streaming
+@app.route('/api/generate_todo_stream', methods=['POST'])
+def generate_todo_stream():
     user_data = request.json
     user_input = user_data.get('objectives')
-    
-    # Fetch Google Calendar events
-    events = get_calendar_events()
-    
-    # Generate a combined todo list with AI tasks and calendar events
-    todo_list = generate_todo_with_calendar(user_input, events)
-    
-    return jsonify({'todo_list': todo_list})
+
+    def stream_response():
+        for task_chunk in generate_tasks_stream(user_input):
+            print(task_chunk)
+            yield f"{task_chunk}\n"  # Send each chunk as a separate task
+
+    return Response(stream_response(), content_type='text/plain')
 
 # For testing purposes, just return static tasks
 @app.route('/api/todo_list', methods=['GET'])
