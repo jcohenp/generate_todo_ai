@@ -22,7 +22,7 @@ const AIModal = ({ open, handleClose }) => {
   const handleGenerateTasks = async () => {
     if (!userInput) return;
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/generate_todo', { objectives: userInput });
+      const response = await axios.post('http://127.0.0.1:8000/api/generate_todo', { objectives: userInput });
   
       const removeMarkdown = (text) => text.replace(/[#*_`~>+=[\]-]+/g, '').trim();
   

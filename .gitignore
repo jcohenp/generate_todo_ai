@@ -1,3 +1,7 @@
 todo_generator
 services/__pycache__/
 *.pyc
+.vscode/
+*.venv*
+*node_modules*
+*.cache*
