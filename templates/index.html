@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Todo List Generator</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>AI-Powered Todo List Generator</h1>
+    <form id="todo-form">
+        <label for="objectives">Enter your objectives:</label>
+        <textarea id="objectives" name="objectives" rows="4" cols="50"></textarea><br><br>
+        <button type="submit">Generate Todo List</button>
+    </form>
+    <div id="todo-list"></div>
+
+    <script>
+        document.getElementById('todo-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const objectives = document.getElementById('objectives').value;
+            const response = await fetch('/generate_todo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ objectives: objectives })
+            });
+            const data = await response.json();
+            document.getElementById('todo-list').innerHTML = '<h2>Your Todo List:</h2><ul>' + 
+                data.todo_list.map(task => `<li>${task}</li>`).join('') + '</ul>';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+/* General layout tweaks */
+.fc-toolbar {
+  background-color: #1e1e1e;
+  padding: 10px;
+  border-radius: 8px;
+  color: #fff;
+}
+
+/* Remove lines around the day titles in the header */
+.fc-col-header-cell {
+  border: none; /* No borders for day headers */
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+}
+
+/* Style the header title */
+.fc-toolbar-title {
+  color: #f5f5f5; /* Title color */
+}
+
+/* Vertical day separators - Make them very subtle */
+.fc-timegrid-col-frame {
+  border-right: 1px solid #333; /* Thinner, more subtle line between each day */
+}
+
+/* Make all rows the same height as the all-day row */
+.fc-timegrid-slot {
+  height: 50px; /* Make time slots same size as all-day row */
+  border-bottom: 1px solid #333; /* Optional: Keep borders thinner */
+}
+
+/* Ensure no borders on "all-day" row and keep the same height */
+.fc-daygrid-body tr {
+  height: 50px; /* Same height as time slots */
+}
+
+/* Remove external borders of the table */
+.fc {
+  border: none !important; /* No outer border for the whole calendar */
+  box-shadow: none !important; /* No shadows */
+}
+
+/* Ensure no outer borders around the table */
+.fc-view,
+.fc-view > table {
+  border: none !important;
+}
